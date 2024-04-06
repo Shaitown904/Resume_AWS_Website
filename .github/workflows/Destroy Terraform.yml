@@ -1,0 +1,23 @@
+# This is a basic workflow to help you get started with Actions
+
+name: 'Destroy Terraform Infrastructure'
+
+on:
+  pull_request:
+    types: [closed]
+
+jobs:
+  destroy_infrastructure:
+    name: 'Destroy Infrastructure'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
+        with:
+          cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+
+      - name: Terraform Destroy
+        run: terraform destroy -auto-approve -input=false
