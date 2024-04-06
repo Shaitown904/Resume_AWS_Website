@@ -58,6 +58,8 @@ jobs:
     runs-on: ubuntu-latest
     environment: production
 
+   
+
     # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
     defaults:
       run:
@@ -67,6 +69,11 @@ jobs:
     # Checkout the repository to the GitHub Actions runner
     - name: Checkout
       uses: actions/checkout@v3
+    #set up aws credentials
+    - name: 'Configure AWS credentials'
+      run: |
+          aws configure set aws_access_key_id ${{ secrets.key1 }}
+          aws configure set aws_secret_access_key ${{ secrets.key2 }}
 
     # Install the latest version of Terraform CLI and configure the Terraform CLI configuration file with a Terraform Cloud user API token
     - name: Setup Terraform
